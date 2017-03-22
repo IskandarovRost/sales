@@ -204,20 +204,6 @@ task undeploy(type: Delete, dependsOn: ':app-web:cleanConf') {
     delete("$cuba.tomcat.dir/webapps/app-core")
     delete("$cuba.tomcat.dir/webapps/app")
 }
-
-task restart(dependsOn: ['stop', ':app-core:deploy', ':app-web:deploy'], description: 'Redeploys applications and restarts local Tomcat') << {
-    ant.waitfor(maxwait: 6, maxwaitunit: 'second', checkevery: 2, checkeveryunit: 'second') {
-        not {
-            socket(server: 'localhost', port: '8787')
-        }
-    }
-    start.execute()
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.1'
-}
-
 task stage(dependsOn: ['setupTomcat', ':app-core:deploy', ':app-web:deploy']) {
     doLast {
         // replace context.xml with heroku-context.xml
@@ -251,11 +237,22 @@ cuba.automaticDatabaseUpdate = true
         def webConfDir = new File('deploy/tomcat/conf/ROOT/')
         webConfDir.mkdirs()
         def webProperties = new File(webConfDir, 'local.app.properties')
-        webProperties.text = '''
-cuba.webContextName = /
-        '''
+        webProperties.text = '''cuba.webContextName = /'''
     }
 }
+task restart(dependsOn: ['stop', ':app-core:deploy', ':app-web:deploy'], description: 'Redeploys applications and restarts local Tomcat') << {
+    ant.waitfor(maxwait: 6, maxwaitunit: 'second', checkevery: 2, checkeveryunit: 'second') {
+        not {
+            socket(server: 'localhost', port: '8787')
+        }
+    }
+    start.execute()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.1'
+}
+
 task buildWar(type: CubaWarBuilding) {
     includeJdbcDriver = true
     webXmlPath = 'modules/web/web/WEB-INF/single-war-web.xml'
