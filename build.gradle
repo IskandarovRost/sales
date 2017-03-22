@@ -5,7 +5,7 @@ buildscript {
         maven {
             url 'https://repo.cuba-platform.com/content/groups/work'
             credentials {
-                username(rootProject.hasProperty('repoUser') ? rootProject['repoUser'] : 'cubar')
+                username(rootProject.hasProperty('repoUser') ? rootProject['repoUser'] : System.getenv('CUBA_REPO_USER'))
                 password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'cuba123')
             }
         }
