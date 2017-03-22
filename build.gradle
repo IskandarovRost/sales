@@ -226,6 +226,7 @@ task wrapper(type: Wrapper) {
 }
 
 task buildWar(type: CubaWarBuilding) {
+    includeJdbcDriver = true
     webXmlPath = 'modules/web/web/WEB-INF/single-war-web.xml'
     coreContextXmlPath = 'modules/core/web/META-INF/war-context.xml'
     appProperties = ['cuba.automaticDatabaseUpdate' : true]
