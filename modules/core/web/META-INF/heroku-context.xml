@@ -1,0 +1,19 @@
+
+<Context>
+
+    <!-- Database connection -->
+    <Resource
+            name="jdbc/CubaDS"
+            type="javax.sql.DataSource"
+            maxTotal="20"
+            maxIdle="2"
+            maxWaitMillis="5000"
+            driverClassName="org.postgresql.Driver"
+            url="jdbc:postgresql://ec2-54-225-240-168.compute-1.amazonaws.com/dd4i1k3su9jr9h"
+            username="zaxvqlcdetzent"
+            password="0c26f71ba8a51748e9b1009326bbb75ae1304ee8f18dc0501650f4ef2dd55009"/>
+
+    <!-- Switch off session serialization -->
+    <Manager pathname=""/>
+
+</Context>
